@@ -1,5 +1,6 @@
-package src.Poker;
+package Poker;
 
+import java.security.spec.RSAOtherPrimeInfo;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -10,21 +11,66 @@ import java.util.Queue;
 import java.util.Scanner;
 import java.util.Set;
 
+
 /**
  * Game class 실제 게임 구현
  */
 public class Game {
     private Player player1;
     private Player player2;
-    private int fieldMoney;
+    private int imsimoney;
+    private int fieldmoney;
+    private boolean turn;
+    private int bet;
 
     /**
      * Game 생성자 player 두명으로 시작
      */
-    Game(Player player1, Player player2) {
+    Game(Player player1,Player player2) {
         this.player1 = player1;
         this.player2 = player2;
-        fieldMoney = 0;
+    }
+
+    public boolean isTurn() {
+        return turn;
+    }
+
+    public void setTurn(boolean turn) {
+        this.turn = turn;
+    }
+
+    public int getImsimoney() {
+        return imsimoney;
+    }
+
+    public void setImsimoney(int imsimoney) {
+        this.imsimoney = imsimoney;
+    }
+
+    public int getFieldmoney() {
+        return fieldmoney;
+    }
+
+    public void setFieldmoney(int fieldmoney) {
+        this.fieldmoney = fieldmoney;
+    }
+
+    /**
+     * getter for player1
+     * 
+     * @return player1
+     */
+    public Player getPlayer1() {
+        return player1;
+    }
+
+    /**
+     * getter for player2
+     * 
+     * @return player2
+     */
+    public Player getPlayer2() {
+        return player2;
     }
 
     /**
@@ -36,7 +82,10 @@ public class Game {
      * @param deck 모든 카드 list
      */
     private void distribute(List<Card> list, Queue<Integer> q, List<Card> deck) {
-        list.add(deck.get((int) q.poll()));
+
+            list.add(deck.get(q.poll()));
+
+
     }
 
     /**
@@ -46,7 +95,11 @@ public class Game {
      * @param player2
      */
     public void whoIsWinner(Player player1, Player player2) {
-        if (!(player1.isDie() && player2.isDie())) {
+        if (player1.isDie()) {
+            System.out.println("Player2 wins");
+        } else if (player2.isDie()) {
+            System.out.println("Player1 wins");
+        } else {
             player1.setMyDeck(whatYouGot(player1.getMyDeck(), player1.getField()));
             player2.setMyDeck(whatYouGot(player2.getMyDeck(), player2.getField()));
             if (isRSF(player1.getMyDeck()) || isRSF(player2.getMyDeck())) {
@@ -141,10 +194,6 @@ public class Game {
                     player2.setWin(true);
                 }
             }
-        } else if (player1.isDie()) {
-            player2.setWin(true);
-        } else {
-            player1.setWin(true);
         }
     }
 
@@ -381,7 +430,8 @@ public class Game {
      * 실제 game을 실행하는 method
      */
     public void playGame(Scanner scan) {
-        Deck deck = new Deck();
+        Game game = new Game(player1,player2);
+        Poker.Deck deck = new Poker.Deck();
         Set<Integer> set = new HashSet<>();
         while (set.size() < 14) {
             set.add((int) (Math.random() * 52));
@@ -391,104 +441,125 @@ public class Game {
         while (iter.hasNext()) {
             order.add(iter.next());
         }
+
         for (int i = 0; i < 2; i++) {
-            distribute(player1.getMyDeck(), order, deck.getDeck());
-            distribute(player2.getMyDeck(), order, deck.getDeck());
+            game.distribute(game.getPlayer1().getMyDeck(), order, deck.getDeck());
+            game.distribute(game.getPlayer2().getMyDeck(), order, deck.getDeck());
         }
         for (int i = 0; i < 3; i++) {
-            distribute(player1.getField(), order, deck.getDeck());
-            distribute(player2.getField(), order, deck.getDeck());
+            game.distribute(game.getPlayer1().getField(), order, deck.getDeck());
+            game.distribute(game.getPlayer2().getField(), order, deck.getDeck());
         }
-        player1.setMoney(player1.getMoney() - 500);
-        player2.setMoney(player2.getMoney() - 500);
-        fieldMoney += 1000;
-        System.out.println("Player1 Deck: " + player1.getMyDeck());
-        System.out.println("Player1: " + player1.getField());
-        System.out.println("Player2: " + player2.getField());
-        betting(scan, player1, player2);
-        if (!(player1.isDie() || player1.isDie())) {
-            distribute(player1.getField(), order, deck.getDeck());
-            distribute(player2.getField(), order, deck.getDeck());
-            System.out.println("Player1 Deck: " + player1.getMyDeck());
-            System.out.println("Player1: " + player1.getField());
-            System.out.println("Player2: " + player2.getField());
-            betting(scan, player1, player2);
-        }
-        if (!(player1.isDie() || player1.isDie())) {
-            distribute(player1.getMyDeck(), order, deck.getDeck());
-            distribute(player2.getMyDeck(), order, deck.getDeck());
-            System.out.println("Player1 Deck: " + player1.getMyDeck());
-            System.out.println("Player1: " + player1.getField());
-            System.out.println("Player2: " + player2.getField());
-            betting(scan, player1, player2);
-        }
-        whoIsWinner(player1, player2);
-        if (player1.isWin()) {
-            System.out.println("Player1 Win");
-            player1.setMoney(fieldMoney + player1.getMoney());
+        System.out.println("Player1 Deck: " + game.getPlayer1().getMyDeck());
+        System.out.println("Player1: " + game.getPlayer1().getField());
+        System.out.println("Player2: " + game.getPlayer2().getField());
+
+            playingbet(scan, game.getPlayer1(), game.getPlayer2(),game);
+        if (game.player1.isOneMore() && game.player2.isOneMore()&&this.player1.isDie()==false && this.player2.isDie()==false) {
+            game.distribute(game.getPlayer1().getField(), order, deck.getDeck());
+            game.distribute(game.getPlayer2().getField(), order, deck.getDeck());
+            System.out.println("Player1 Deck: " + game.getPlayer1().getMyDeck());
+            System.out.println("Player1: " + game.getPlayer1().getField());
+            System.out.println("Player2: " + game.getPlayer2().getField());
+            playingbet(scan, game.getPlayer1(), game.getPlayer2(),game);
         } else {
-            System.out.println("Player2 Win");
-            player2.setMoney(fieldMoney + player2.getMoney());
+            game.whoIsWinner(game.getPlayer1(), game.getPlayer2());
         }
-        System.out.println(player1.getMyDeck());
-        System.out.println(player2.getMyDeck());
-        System.out.println(player1.getMoney());
-        System.out.println(player2.getMoney());
-        player1.setMyDeck(new ArrayList<>());
-        player2.setMyDeck(new ArrayList<>());
-        player1.setField(new ArrayList<>());
-        player2.setField(new ArrayList<>());
-        player1.setDie(false);
-        player2.setDie(false);
-        fieldMoney = 0;
+
+
+        if (game.player1.isOneMore() && game.player2.isOneMore()&&this.player1.isDie()==false && this.player2.isDie()==false) {
+            game.distribute(game.getPlayer1().getMyDeck(), order, deck.getDeck());
+            game.distribute(game.getPlayer2().getMyDeck(), order, deck.getDeck());
+            System.out.println("Player1 Deck: " + game.getPlayer1().getMyDeck());
+            System.out.println("Player1: " + game.getPlayer1().getField());
+            System.out.println("Player2: " + game.getPlayer2().getField());
+            playingbet(scan, game.getPlayer1(), game.getPlayer2(),game); //
+            game.whoIsWinner(game.getPlayer1(), game.getPlayer2());
+        } else {
+            game.whoIsWinner(game.getPlayer1(), game.getPlayer2());
+        }
+
+
+        if (this.getPlayer1().isWin()) {
+            this.getPlayer1().setMymoney(this.getFieldmoney() + this.getPlayer1().getMymoney());
+            System.out.println("Player1 Win");
+        } else {
+            this.getPlayer2().setMymoney(this.getFieldmoney() + this.getPlayer2().getMymoney());
+            System.out.println("Player2 Win");
+        }
+
+        System.out.println(this.getFieldmoney());
+        System.out.println("player1 : " + game.getPlayer1().getMymoney() +"player2 : " + game.getPlayer2().getMymoney());
+
+        System.out.println("Player1 Deck: " + game.getPlayer1().getMyDeck());
+        System.out.println("Player1: " + game.getPlayer1().getField());
+        System.out.println("Player2: " + game.getPlayer2().getField());
+
+        System.out.println(game.getPlayer1().getMyDeck());
+        System.out.println(game.getPlayer2().getMyDeck());
+
     }
 
-    public void betting(Scanner scan, Player player1, Player player2) {
-        int pl1 = 1;
-        int pl2 = 0;
+    public void playingbet(Scanner scan,Player player1,Player player2,Game game) {
+        int p1=0;
+        int p2=0;
+        int count =0;
 
-        while (!(player1.isDie() || player2.isDie())) {
-            System.out.println(fieldMoney);
-            if (pl2 != 0) {
-                System.out.println("Other player raised: " + pl2);
+        while (count < 4 || player1.isDie() == false || player2.isDie() == false || (player1.getMymoney() >0 && player2.getMymoney()>0)) {
+            System.out.println("What do you want");
+            System.out.println("1.call  2.half  3.full  4.die 5.basic");
+
+            bet = scan.nextInt();
+            p1 = player1.betting(bet,p2,this);
+            if (bet == 4) {
+                player1.setDie(true);
+                break;
+            } else if (count == 3) {
+                bet = 1;
+                System.out.println("count == 3 you are select call");
+            } else count++;
+
+            bet = scan.nextInt();
+            p2 = player2.betting(bet,p1,this);
+            if (bet == 4) {
+                player1.setDie(true);
+                break;
+            } else if (count == 3) {
+                bet = 1;
+                System.out.println("count == 3 you are select call");
+            } else count++;
+
+            if (p1 == -1 || p2 == -1) {
+                System.out.println("죽었습니다");
+                return;
             }
-            if (!(player2.isDie() || pl1 == pl2)) {
-                pl1 = player1.betting(scan, this, pl2);
-            }
-            if (!player1.isDie() && (pl1 > pl2 || pl1 == 0)) {
-                pl2 = player2.betting(scan, this, pl1);
-            }
-            if (pl1 == pl2) {
+            if (player1.isDie() == true || player2.isDie() == true) {
+                whoIsWinner(player1,player2);
                 break;
             }
+            if (p1 == p2 && this.getFieldmoney()>200) {
+                p1 =0;
+                p2=0;
+                player1.setOneMore(true);
+                player2.setOneMore(true);
+                break;
+            }
+
+
         }
-    }
 
-    /**
-     * getter for fieldMoney
-     * 
-     * @return fieldMoney
-     */
-    public int getFieldMoney() {
-        return fieldMoney;
-    }
 
-    /**
-     * setter for fieldMoney
-     * 
-     * @param fieldMoney 새로 설정할 fieldmoney
-     */
-    public void setFieldMoney(int fieldMoney) {
-        this.fieldMoney = fieldMoney;
-    }
 
+
+
+    }
     public static void main(String[] args) {
-        Game game = new Game(new Player(), new Player());
+        Game game = new Game(new Player(),new Player());
         Scanner scan = new Scanner(System.in);
         String ans = "yes";
         while (ans.equalsIgnoreCase("yes")) {
             game.playGame(scan);
-            System.out.println("다시하기? (yes)");
+            System.out.println("regame? (yes)");
             ans = scan.next();
         }
     }

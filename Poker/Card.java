@@ -1,4 +1,4 @@
-package src.Poker;
+package Poker;
 
 /**
  * Card class compareTo 구현을 위해 Comparable<Card> implements
