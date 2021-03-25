@@ -9,19 +9,19 @@ class AVL:
         node.balanceFactor = left height - right height
 
     def #balance(node)
-        if node.right.balanceFactor < -1:
+        if node.balanceFactor > 1:
             rotateRight(node.right)
-        elif node.right.balanceFactor < -1:
+        elif node.balanceFactor < -1:
             rotateLeft(node.left)
         return node
 
-    def # rotateRight:
+    def# rotateRight:
         tmp = node.left
         node.left = tmp.right
         tmp.right = node
         return tmp
 
-    def # rotateLeft:
+    def# rotateLeft:
         tmp = node.right
         node.right = tmp.left
         tmp.left = node
