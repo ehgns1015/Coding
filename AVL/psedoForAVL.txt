@@ -15,13 +15,21 @@ class AVL:
             rotateLeft(node.left)
         return node
 
+<<<<<<< Updated upstream
     def# rotateRight:
+=======
+    def #rotateRight:
+>>>>>>> Stashed changes
         tmp = node.left
         node.left = tmp.right
         tmp.right = node
         return tmp
 
+<<<<<<< Updated upstream
     def# rotateLeft:
+=======
+    def #rotateLeft:
+>>>>>>> Stashed changes
         tmp = node.right
         node.right = tmp.left
         tmp.left = node
