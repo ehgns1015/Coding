@@ -1,0 +1,58 @@
+class AVL:
+    consructor(data):
+        size = 0
+        for element of data:
+            add(data)
+    
+    def #calculate(node)
+        node.height=max(right height, left height) + 1
+        node.balanceFactor = left height - right height
+
+    def #balance(node)
+        if node.right.balanceFactor < -1:
+            rotateRight(node.right)
+        elif node.right.balanceFactor < -1:
+            rotateLeft(node.left)
+        return node
+
+    def # rotateRight:
+        tmp = node.left
+        node.left = tmp.right
+        tmp.right = node
+        return tmp
+
+    def # rotateLeft:
+        tmp = node.right
+        node.right = tmp.left
+        tmp.left = node
+        return tmp
+
+    def add(data):
+        root = #add(data, root)
+
+    def #add(data, node):
+        if node is null:
+            size++
+            return new node(data)
+        if data < node.data:
+            node.left.data = #add(data, node.left)
+        elif data > node.data:
+            node.right.data = #add(data, node.right)
+        else:
+            return node
+        #calculate(node)
+        return #balance(node)
+
+    //bst와 동일 balancing과 height계산만 추가할 것
+    //그리고 successor 사용할 것
+    def remove(data);
+
+    //bst와 동일
+    def get(data);
+    def contains(data);
+    def clear();
+    def height();
+    def size();
+    def getRoot();
+
+
