@@ -1,4 +1,4 @@
-package src.Poker;
+package Poker;
 
 import java.util.ArrayList;
 import java.util.List;

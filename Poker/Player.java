@@ -1,8 +1,8 @@
-package src.Poker;
+package Poker;
+
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * Player class
@@ -11,58 +11,83 @@ public class Player {
     private boolean win;
     private List<Card> myDeck;
     private List<Card> field;
+    private boolean oneMore;
     private boolean die;
-    private int money;
+    private int mymoney;
+    private boolean turn;
 
+
+
+
+
+
+    
     /**
      * 생성될때 자신의 덱, 필드, 한번더를 초기값으로 아래처럼 가짐
      */
     Player() {
         myDeck = new ArrayList<>();
         field = new ArrayList<>();
-        money = 20000;
+        oneMore = true;
+        mymoney = 10000;
     }
 
-    public int betting(Scanner scan, Game game, int diff) {
-        int ans = 0;
-        while (true) {
-            if (money <= 0) {
-                System.out.println("You don't have money");
-                this.setDie(true);
+    public int getMymoney() {
+        return mymoney;
+    }
+
+    public void setMymoney(int mymoney) {
+        this.mymoney = mymoney;
+    }
+
+
+    public boolean isTurn() {
+        return turn;
+    }
+
+    public void setTurn(boolean turn) {
+        this.turn = turn;
+    }
+
+    public int betting(int bet,int othermoney, Game game) {
+        int imsi=othermoney;
+
+        switch (bet) {
+            case 1 :
+                System.out.println("call");
+                mymoney -= othermoney;
+                game.setFieldmoney(game.getFieldmoney() + othermoney);
+                System.out.println(game.getFieldmoney());
+                return imsi;
+            case 2 :
+                System.out.println("half");
+                mymoney -= (game.getFieldmoney() / 2);
+                imsi = game.getFieldmoney()/2;
+                game.setFieldmoney(game.getFieldmoney()+ game.getFieldmoney() / 2);
+                System.out.println(game.getFieldmoney());
+                return imsi;
+            case 3 :
+                System.out.println("full");
+                mymoney -= game.getFieldmoney();
+                imsi = game.getFieldmoney();
+                game.setFieldmoney(game.getFieldmoney() * 2);
+                System.out.println(game.getFieldmoney());
+                return imsi;
+            case 4 :
+                System.out.println("die");
+
+                return -1;
+            case 5 :
+                System.out.println("basic");
+                mymoney -= 100;
+                game.setFieldmoney(game.getFieldmoney()+ 100 );
+                System.out.println(game.getFieldmoney());
+                return 100;
+
+            default:
+                System.out.println("숫자를 다시 입력하세여");
                 return 0;
-            } else {
-                System.out.println("Choose how much you want to bet");
-                System.out.println("[1] call, [2] half, [3] raise, [4] die");
-                ans = scan.nextInt();
-                switch (ans) {
-                case 1:
-                    game.setFieldMoney(game.getFieldMoney() + diff);
-                    money -= diff;
-                    return diff;
-                case 2:
-                    int half = game.getFieldMoney() / 2;
-                    game.setFieldMoney(game.getFieldMoney() + half);
-                    money -= half;
-                    return half;
-                case 3:
-                    System.out.println("How much you want to raise");
-                    int raise = scan.nextInt();
-                    if (raise <= diff || raise > game.getFieldMoney() * 2) {
-                        System.out.println(
-                                "You should bet more than other's betting or less than 2 times of field money");
-                    } else {
-                        game.setFieldMoney(game.getFieldMoney() + raise);
-                        money -= raise;
-                        return raise;
-                    }
-                    break;
-                case 4:
-                    setDie(true);
-                    return 0;
-                default:
-                    break;
-                }
-            }
+
         }
     }
 
@@ -83,7 +108,7 @@ public class Player {
     public List<Card> getField() {
         return field;
     }
-
+    
     /**
      * getter for deck
      * 
@@ -91,6 +116,19 @@ public class Player {
      */
     public List<Card> getMyDeck() {
         return myDeck;
+    }
+
+    /**
+     * getter for oneMore
+     * 
+     * @return 한번 더
+     */
+    public boolean isOneMore() {
+        return oneMore;
+    }
+
+    public void setOneMore(boolean oneMore) {
+        this.oneMore = oneMore;
     }
 
     /**
@@ -103,30 +141,12 @@ public class Player {
     }
 
     /**
-     * setter for die
-     * 
-     * @param die player die 상태
-     */
-    public void setDie(boolean die) {
-        this.die = die;
-    }
-
-    /**
      * setter for deck
      * 
      * @param myDeck 새로운 deck
      */
     public void setMyDeck(List<Card> myDeck) {
         this.myDeck = myDeck;
-    }
-
-    /**
-     * setter for field
-     * 
-     * @param field 새로운 field
-     */
-    public void setField(List<Card> field) {
-        this.field = field;
     }
 
     /**
@@ -138,21 +158,7 @@ public class Player {
         this.win = win;
     }
 
-    /**
-     * getter for money
-     * 
-     * @return money
-     */
-    public int getMoney() {
-        return money;
-    }
-
-    /**
-     * setter for money
-     * 
-     * @param money 새로 설정할 money
-     */
-    public void setMoney(int money) {
-        this.money = money;
+    public void setDie(boolean die) {
+        this.die = die;
     }
 }
