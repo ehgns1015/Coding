@@ -1,0 +1,44 @@
+class MinHeap:
+    INITIAL_CAPACITY = 13;
+    backingArray
+    size
+
+    constructor MinHeap():
+        //backingArray.length = INITIAL_CAPACITY
+        backingArray = [INITIAL_CAPACITY]
+        size = 0;
+
+    constructor MinHeap(data):
+        if data is not null:
+            size = data.size()
+            backingArray = [2 * size + 1]
+            for i in range(size):
+                if data.get(i) is not null:
+                    backingArray[i + 1] = data.get(i)
+            for i in range(size / 2, 0, -1):
+                downHeap(i);
+
+    //이 두 method 알아서 찾아서 반복문버전이랑 재귀버전 둘다 해보셈
+    def upHeap(num):
+    def downHeap(num):
+
+    def add(item):
+        if item is not null:
+            if size is backingArray.length - 1:
+                tmp = [backingArray.length * 2]
+                for i in range(len(backingArray)):
+                    tmp[i] = backingArray[i]
+                backingArray = tmp;
+            backingArray[size] = item
+            size++
+            upHeap(size)
+
+    def remove():
+        if not isEmpty():
+            data = backingArray[1]
+            swap(1, size--)
+            downHeap(1)
+            backingArray[size + 1] = null
+        return data
+
+    

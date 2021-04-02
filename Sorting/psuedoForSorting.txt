@@ -1,0 +1,91 @@
+class Sorting:
+    def swap():
+        //swap은 니가 알아서 하셈 매개변수도 맘대로 설정하셈
+
+    def insertionSort(arr) :
+        if arr is not null: 
+            for i in range(1, len(arr)):
+                j = i - 1
+                while j >= 0:
+                    if arr[j] > tmp:
+                        swap
+                    j--;
+
+    def selectionSort(arr):
+        if arr is not null: 
+            for i in range(len(arr) - 1):
+                min = i
+                for j in in range(i + 1, len(arr)):
+                    if arr[j] < arr[min]:
+                        min = j
+                swap(min, i)
+
+    def mergeSort(arr):
+        if arr is not null: 
+            if len(arr) > 1:
+                //left.length=arr.length / 2
+                left = []
+                //right.length=나머지
+                right = []
+                for i in range(len(left)):
+                    left[i] = arr[i]
+                for i in range(len(right)):
+                    right[i] = arr[i + len(left)];
+                mergeSort(left)
+                mergeSort(right)
+                #merge(arr, left, right)
+
+    def #merge(arr, left, right):
+        i = 0;
+        j = 0;
+        for k in range(len(arr))
+            if j >= len(right) or (i < len(left) and left[i] <= right[j]):
+                arr[k] = leftArr[i]
+                i++
+            else
+                arr[k] = rightArr[j]
+
+    def quickSort(arr, random):
+        if not (arr is null or rand is null):
+            #quickSort(arr, 0, len(arr) - 1, rand)
+
+    def #quickSort(arr, first, last, random):
+        if last > first:
+            pivotIndex = random.nextInt(last - first) + first
+            pivot = arr[pivotIndex]
+            swap(arr, pivotIndex, last);
+            index = first
+            for i in range(first, last)
+                arr[i] <= pivot:
+                    swap(i, index)
+                    index++;
+            swap(last, index);
+            #quickSort(arr, first, index - 1, rand)
+            #quickSort(arr, index + 1, last, rand)
+
+    def lsdRadixSort(arr) {
+        if arr is not null:
+            //buckets.length = 19
+            buckets = [];
+            for i in len(buckets):
+                buckets[i] = new linkedlist
+            mod = 10
+            div = 1
+            cont = true
+            while cont:
+                cont = false;
+                for num of arr:
+                    bucket = num / div
+                    if bucket / 10 != 0:
+                        cont = true;
+                    if buckets[bucket % mod + 9] is null:
+                        buckets[bucket % mod + 9] = new linkedlist
+                    buckets[bucket % mod + 9].add(num)
+                arrIdx = 0
+                for bucket of buckets:
+                    if bucket is not null:
+                        for num of bucket:
+                            arr[arrIdx] = num
+                            arrIdx++
+                        bucket.clear()
+                div *= 10
