@@ -20,6 +20,26 @@ class Sorting:
                         min = j
                 swap(min, i)
 
+    def cocktailSort(arr) {
+      if arr is not null:
+        swapped = true
+        i = 0;
+        j = len(arr) - 1;
+        while i < j and swapped:
+            swapped = false
+            for k in range(i, j):
+                if arr[k] > arr[k + 1]:
+                    swap
+                    swapped = true;
+            j--;
+            if swapped:
+                swapped = false;
+                for k in range(k, j, -1):
+                  if arr[k] < arr[k - 1]:
+                        swap
+                        swapped = true
+              i++
+
     def mergeSort(arr):
         if arr is not null: 
             if len(arr) > 1:
