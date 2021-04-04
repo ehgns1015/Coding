@@ -22,30 +22,14 @@ public class SortingStudentTests {
     @Before
     public void setUp() {
         /*
-            Unsorted Names:
-                index 0: Adrianna
-                index 1: Brandon
-                index 2: Destini
-                index 3: Mahima
-                index 4: Alok
-                index 5: Robert
-                index 6: Stephanie
-                index 7: Jacob
-                index 8: Nick
-                index 9: Andrew
+         * Unsorted Names: index 0: Adrianna index 1: Brandon index 2: Destini index 3:
+         * Mahima index 4: Alok index 5: Robert index 6: Stephanie index 7: Jacob index
+         * 8: Nick index 9: Andrew
          */
         /*
-            Sorted Names:
-                index 0: Adrianna
-                index 1: Alok
-                index 2: Andrew
-                index 3: Brandon
-                index 4: Destini
-                index 5: Jacob
-                index 6: Mahima
-                index 7: Nick
-                index 8: Robert
-                index 9: Stephanie
+         * Sorted Names: index 0: Adrianna index 1: Alok index 2: Andrew index 3:
+         * Brandon index 4: Destini index 5: Jacob index 6: Mahima index 7: Nick index
+         * 8: Robert index 9: Stephanie
          */
         tas = new TeachingAssistant[10];
         tas[0] = new TeachingAssistant("Adrianna");
@@ -77,38 +61,41 @@ public class SortingStudentTests {
     public void testInsertionSort() {
         Sorting.insertionSort(tas, comp);
         assertArrayEquals(tasByName, tas);
-        assertTrue("Number of comparisons: " + comp.getCount(),
-                comp.getCount() <= 24 && comp.getCount() != 0);
+        assertTrue("Number of comparisons: " + comp.getCount(), comp.getCount() <= 24 && comp.getCount() != 0);
     }
 
     @Test(timeout = TIMEOUT)
     public void testSelectionSort() {
         Sorting.selectionSort(tas, comp);
         assertArrayEquals(tasByName, tas);
-        assertTrue("Number of comparisons: " + comp.getCount(),
-                comp.getCount() <= 45 && comp.getCount() != 0);
+        assertTrue("Number of comparisons: " + comp.getCount(), comp.getCount() <= 45 && comp.getCount() != 0);
+    }
+
+    @Test(timeout = TIMEOUT)
+    public void testCocktailSort() {
+        Sorting.cocktailSort(tas, comp);
+        assertArrayEquals(tasByName, tas);
+        assertTrue("Number of comparisons: " + comp.getCount(), comp.getCount() <= 44);
     }
 
     @Test(timeout = TIMEOUT)
     public void testMergeSort() {
         Sorting.mergeSort(tas, comp);
         assertArrayEquals(tasByName, tas);
-        assertTrue("Number of comparisons: " + comp.getCount(),
-                comp.getCount() <= 21 && comp.getCount() != 0);
+        assertTrue("Number of comparisons: " + comp.getCount(), comp.getCount() <= 21 && comp.getCount() != 0);
     }
 
     @Test(timeout = TIMEOUT)
     public void testQuickSort() {
         Sorting.quickSort(tas, comp, new Random(234));
         assertArrayEquals(tasByName, tas);
-        assertTrue("Number of comparisons: " + comp.getCount(),
-                comp.getCount() <= 27 && comp.getCount() != 0);
+        assertTrue("Number of comparisons: " + comp.getCount(), comp.getCount() <= 27 && comp.getCount() != 0);
     }
 
     @Test(timeout = TIMEOUT)
     public void testLsdRadixSort() {
-        int[] unsortedArray = new int[] {54, 28, 58, 84, 20, 122, -85, 3};
-        int[] sortedArray = new int[] {-85, 3, 20, 28, 54, 58, 84, 122};
+        int[] unsortedArray = new int[] { 54, 28, 58, 84, 20, 122, -85, 3 };
+        int[] sortedArray = new int[] { -85, 3, 20, 28, 54, 58, 84, 122 };
         Sorting.lsdRadixSort(unsortedArray);
         assertArrayEquals(sortedArray, unsortedArray);
     }
@@ -152,16 +139,14 @@ public class SortingStudentTests {
         }
 
         /**
-         * Create a comparator that compares the names of the teaching
-         * assistants.
+         * Create a comparator that compares the names of the teaching assistants.
          *
          * @return comparator that compares the names of the teaching assistants
          */
         public static ComparatorPlus<TeachingAssistant> getNameComparator() {
             return new ComparatorPlus<TeachingAssistant>() {
                 @Override
-                public int compare(TeachingAssistant ta1,
-                                   TeachingAssistant ta2) {
+                public int compare(TeachingAssistant ta1, TeachingAssistant ta2) {
                     incrementCount();
                     return ta1.getName().compareTo(ta2.getName());
                 }
@@ -177,6 +162,7 @@ public class SortingStudentTests {
 
         /**
          * Get the number of comparisons made.
+         * 
          * @return number of comparisons made
          */
         public int getCount() {
@@ -184,8 +170,8 @@ public class SortingStudentTests {
         }
 
         /**
-         * Increment the number of comparisons made by one. Call this method in
-         * your compare() implementation.
+         * Increment the number of comparisons made by one. Call this method in your
+         * compare() implementation.
          */
         public void incrementCount() {
             count++;
