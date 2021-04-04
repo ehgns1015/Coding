@@ -1,0 +1,163 @@
+def BST<T extends Comparable<? super T>>:
+    root;
+    size;
+    constructor():
+        // DO NOT IMPLEMENT THIS CONSTRUCTOR!
+
+    constructor(data):
+        if data is not null:
+            for element in data:
+                if element is not null:
+                    add(element)
+
+    def add(data):
+        if data is not null:
+            if root is null:
+                root = new node(data);
+		size++
+            else:
+                #add(root, data);
+
+    def #add(curr, data):
+	newnode = new node(data);
+        if curr.data < data:
+            if curr.left is null:
+                curr.left = newnode
+		size++
+            else:
+                #add(curr.left, data)
+        if curr.data > data:
+            if curr.right is null:
+                curr.right = newnode
+		size++
+            else:
+                #add(curr.right, data)
+    
+    def remove(data):
+        if data != null:
+            removed = new node(null)
+            root = #removed(root, removed, data)
+            return removed.data
+
+    def #remove(curr, removed, data):
+    if curr is not null:
+        if curr.data < data:
+            curr.left = #remove(curr.left, removed, data)
+        elif curr.data > data:
+            curr.left = #remove(curr.right, removed, data)
+        else:
+            removed.data = curr.data
+            size--
+            if curr.left is not null:
+                return curr.right
+            elif curr.left is not null:
+                return curr.left
+            else:
+                temp = new node(null);
+                curr.left = #predecessor(curr.left, temp)
+                return temp
+        return curr
+
+
+    def #predecessor(curr, pred):
+        if curr.right is null:
+            pred.data = curr.data
+            return curr.left
+	curr.right = #predecessor(curr.right, pred)
+	return curr
+
+    def get(data):
+	if data != null:
+            return #get(root, data).data
+
+    def #get(curr, data):
+    	if curr is not null:
+            if curr.data < data:
+                return #get(curr.left, data)
+            elif curr.data > data:
+                return #get(curr.right, data)
+            else:
+                return curr
+
+    def contains(data):
+        if get(data) is not null:
+            return true
+        return false
+
+    def preorder():
+        list = []
+	#preorder(root, list)
+
+    def #preorder(curr, list):
+        C
+	L
+	R
+    def inorder():
+        list = []
+	#inorder(root, list)
+
+    def #inorder(curr, list):
+        L
+	C
+	R
+    def postorder():
+        list = []
+	#postorder(root, list)
+
+    def #postorder(curr, list):
+        L
+	R
+	C
+
+    def levelorder():
+    	list = []
+    	q = {}
+	q.add(head)
+    	while !q.isEmpty():
+	    curr = head
+            temp = q.poll()
+            list.add(q.poll())
+            if curr.left is not null:
+                q.add(curr.left)
+            if curr.right is not null:
+                q.add(curr.right)
+        return list
+
+    def clear():
+        size = 0
+        root = null
+
+    def height():
+        return #height(root)
+
+    def #height(curr):
+        if curr is null:
+	    return 0        
+        return {@code max(left.height, right.height) + 1}
+
+    /**
+     * Returns the size of the BST.
+     *
+     * For grading purposes only. You shouldn't need to use this method since
+     * you have direct access to the variable.
+     *
+     * @return the number of elements in the tree
+     */
+    public int size() {
+        // DO NOT MODIFY THIS METHOD!
+        return size;
+    }
+
+    /**
+     * Returns the root of the BST.
+     *
+     * For grading purposes only. You shouldn't need to use this method since
+     * you have direct access to the variable.
+     *
+     * @return the root of the tree
+     */
+    public BSTNode<T> getRoot() {
+        // DO NOT MODIFY THIS METHOD!
+        return root;
+    }
+}
