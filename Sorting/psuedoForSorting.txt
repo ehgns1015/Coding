@@ -19,7 +19,25 @@ class Sorting:
                     if arr[j] < arr[min]:
                         min = j
                 swap(min, i)
-
+_____________________________________________________________________________________
+ public static <T> void selectionSort(T[] arr, Comparator<T> comparator) {
+        //9,8,7,6,5,4,3,2,1
+        if (arr == null) {
+            throw new IllegalArgumentException("no");
+        }
+        for (int i = 0; i < arr.length-1; i++) {
+                T min = arr[i];
+            for (int j = i+1; j < arr.length ; j++) {
+                if (comparator.compare(arr[j],min)<0) {
+                    min = arr[j];
+                }
+            }
+            T temp = min;
+            min = arr[i];
+            arr[i] = temp;
+        }
+    }
+________________________________________________________________
     def cocktailSort(arr) {
       if arr is not null:
         swapped = true
