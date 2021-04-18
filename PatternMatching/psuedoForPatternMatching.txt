@@ -1,0 +1,125 @@
+class PatternMatching:
+    function kmp(pattern, text):
+        if !(pattern is null or pattern.length() is 0 or text is null):
+            if pattern.length() > text.length()):
+                return list
+            table = buildFailureTable(pattern)
+            list=[]
+            i = 0
+            j = 0
+            while i <= text.length() - pattern.length():
+                while j < pattern.length() and text[i + j] is pattern[j]:
+                    j++
+                if j is 0
+                    i++
+                else:
+                    if j is pattern.length():
+                        list.add(i);
+                    nextAlignment = table[j - 1]
+                    i = i + j - nextAlignment
+                    j = nextAlignment
+        return list
+
+    function buildFailureTable(pattern):
+        if pattern is not null:
+            //table.length = pattern.length()
+            table = []*pattern.length()
+            if pattern is null or pattern.length() is 0:
+                return table;
+            i = 0
+            j = 1
+            table[0] = 0
+            while j < pattern.length():
+                if pattern[i] is pattern[j]:
+                    i++
+                    table[j] = i
+                    j++
+                elif i is 0:
+                    table[j] = 0
+                    j++
+                else:
+                    i = table[i - 1]
+        return table
+
+    function boyerMoore(pattern, text):
+        if !(pattern is null or pattern.length() is 0 or text is null):
+            list = []
+            if pattern.length() > text.length():
+                return list;
+            Map lasttable = buildLastTable(pattern)
+            i = 0
+            j = 0
+            while i <= text.length() - pattern.length():
+                j = pattern.length() - 1;
+                temp = text[i + j]
+                while j >= 0 and temp == pattern[j]:
+                    j--
+                    if j >= 0:
+                        temp = text[i + j]
+                if j is -1
+                    list.add(i)
+                    i++
+                else:
+                    if lasttable.containsKey(temp):
+                        shiftindex = lasttable.get(temp)
+                    else:
+                        shiftindex = -1
+                    if shiftindex < j:
+                        i = i + (j - shiftindex)
+                    else:
+                        i++
+            return list
+
+    function buildLastTable(CharSequence pattern):
+        if pattern is not null:
+                table = {key, value}
+            for i < pattern.length():
+                table.put(pattern[i], i)
+            return table
+
+    BASE = 101
+
+    function rabinKarp(pattern, text):        
+        if !(pattern is null or pattern.length() is 0 or text is null):
+            list = []
+            if pattern.length() > text.length():
+                return list;
+            patternHash = #generateHash(pattern, pattern.length())
+            textHash = #generateHash(text, pattern.length())
+            i = 0
+            while i <= text.length() - pattern.length():
+                if patternHash == textHash:
+                    j = 0
+                    while j < pattern.length() and text[i
+                        + j] is pattern[j]:
+                        j++
+                    if j is pattern.length():
+                        list.add(i)
+                if i + 1 <= text.length() - pattern.length():
+                    textHash = #updateHash(textHash, pattern.length(),
+                        text.[i], text[i + pattern.length()]
+                i++
+            return list
+
+    function #generateHash(current, length):
+        if !(current is null or length < 0 and length > current.length()):
+            hash = 0
+            for i < length:
+                hash += current[i] * #pow(BASE, length - 1 - i)
+            return hash
+
+    function #updateHash(oldHash, length, oldChar,
+            newChar):
+        if length >= 0:
+            return (oldHash - oldChar * #pow(BASE, length - 1)) * BASE + newChar
+
+    function #pow(base, exp):
+        if exp is 0:
+            return 1
+        elif exp is 1:
+            return base
+        halfPow = #pow(base, exp / 2)
+        if exp % 2 is 0:
+            return halfPow * halfPow
+        else:
+            return halfPow * #pow(base, (exp / 2) + 1)
