@@ -63,7 +63,7 @@ class Sorting:
         i = 0
         j = 0
         for k in range(len(arr)):
-            if j >= len(left) or (i < len(left) and left[i] < right[j]):
+            if j >= len(right) or (i < len(left) and left[i] < right[j]):
                 arr[k] = left[i]
                 i += 1
             else:
